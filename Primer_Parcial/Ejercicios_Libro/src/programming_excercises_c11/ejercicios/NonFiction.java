@@ -21,3 +21,9 @@ public class NonFiction extends Book{
     public Double getPrecio() {
         return precio;
     }
+    
+    @Override
+    public String toString(){
+        return String.format("El libro "+this.titulo+" su precio es "+this.precio);
+    }
+}
