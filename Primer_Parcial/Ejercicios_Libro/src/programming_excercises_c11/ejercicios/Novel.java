@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming_excercises_c11.ejercicios;
 
 public class Novel extends Story{
@@ -23,6 +18,10 @@ public class Novel extends Story{
     }
     @Override
     public String toString(){
-        return String.format(this.getTitle()+" del autor"+this.getAuthor()+" No."+this.getPages()+" "+ this.getMessage());
+        return String.format("%s del autor %s No.%d %s",this.getTitle(),
+        		this.getAuthor(),
+        		this.getPages(),
+        		this.getMessage(),this.getMessage());
     }
 }
+
