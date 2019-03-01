@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming_excercises_c11.ejercicios;
 
 public class Triangulo extends GeometricFigure{
@@ -17,6 +12,6 @@ public class Triangulo extends GeometricFigure{
     }
     @Override
     public String datos(){
-        return String.format(tipo+" de altura "+alto+" de ancho "+ancho+" tiene un area de: "+this.area());
+        return String.format("%s de altura %d de ancho %d tiene un area de: %f",this.tipo, this.alto, this.ancho);
     }
 }
