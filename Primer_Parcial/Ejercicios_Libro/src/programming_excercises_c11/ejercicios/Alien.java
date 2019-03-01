@@ -9,12 +9,12 @@ package programming_excercises_c11.ejercicios;
 public abstract class Alien {
     protected Integer ojos;
     protected String viscosidad;
-    protected Integer dedos;
+    protected Integer dedosAlien;
 
     public Alien(Integer ojos, String viscosidad, Integer dedos) {
         this.ojos = ojos;
         this.viscosidad = viscosidad;
-        this.dedos = dedos;
+        this.dedosAlien = dedos;
     }
     @Override
     public String toString(){
