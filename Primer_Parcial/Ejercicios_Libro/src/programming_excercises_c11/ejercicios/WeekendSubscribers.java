@@ -14,7 +14,7 @@ public class WeekendSubscribers extends NewspaperSubscriber {
 
     @Override
     public String toString(){
-        return String.format("Calle:%s  ,  Tarifa:%.2f  ,  Tipo:Weekend",this.getCalle(),this.getTasa());
+        return String.format("Calle:%s, Tarifa:%.2f, Tipo:Weekend",this.getCalle(),this.getTasa());
     }
     @Override
     public void setTasa() {
