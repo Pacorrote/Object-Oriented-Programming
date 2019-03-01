@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming_excercises_c11.ejercicios;
 
 
@@ -14,7 +9,7 @@ public class PartTime extends Student{
 
     @Override
     public String id() {
-        return String.format("Estado de medio tiempo: "+this.status);
+        return String.format("Estado de medio tiempo: %s",this.status);
     }
 
     @Override
@@ -27,7 +22,7 @@ public class PartTime extends Student{
     }
     @Override
     public String toString(){
-        return String.format("El estudiante "+this.name+" paga una tarifa de $200 "+id());
+        return String.format("El estudiante %s paga una tarifa de $2000 %s",this.name,id());
     }
     
 }
