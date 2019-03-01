@@ -10,14 +10,14 @@ public class Fiction extends Book {
 
     public Fiction(String title, Double price) {
         super(title, price);
-        setPrice();
+        setPrecio();
     }
     @Override
-    public void setPrice() {
-        this.price=24.99;
+    public void setPrecio() {
+        this.precio=24.99;
     }
     @Override
     public String toString(){
-        return String.format("El libro "+this.title+" su precio es "+this.price);
+        return String.format("El libro %s su precio es %.2f", this.titulo, this.precio);
     }
 }
