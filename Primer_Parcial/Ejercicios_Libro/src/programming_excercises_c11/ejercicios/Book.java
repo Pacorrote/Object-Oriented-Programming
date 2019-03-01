@@ -7,19 +7,19 @@ package programming_excercises_c11.ejercicios;
 
 
 public abstract class Book {
-    public String title;
-    public Double price;
+    public String titulo;
+    public Double precio;
 
-    public Book(String title, Double price) {
-        this.title = title;
-        this.price = price;
+    public Book(String titulo, Double precio) {
+        this.titulo = titulo;
+        this.precio = precio;
     }
-    public String getTitle() {
-        return title;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getPrecio() {
+        return precio;
     }
     public abstract void setPrice();
     
