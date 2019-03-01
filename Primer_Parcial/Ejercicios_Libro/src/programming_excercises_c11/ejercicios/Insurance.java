@@ -1,20 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming_excercises_c11.ejercicios;
 
 
-public abstract  class Insurance {
-    public String Tipos;
-    public double Precio;
+public class Life extends Insurance {
 
-    public Insurance(String Tipo) {
-       this.Tipos=Tipo;
+    public Life(String Tipo) {
+        super(Tipo);
+        Setcos();
+        setTipos(Tipos);
+    }
+    
+    
+    public String toString(){
+        return String.format("%.2f\n%s",this.Precio,Tipos);
+    }
+    @Override
+    public void Setcos() {
+        this.Precio=(double) 36;
     }
 
-    public abstract void Setcos();
+    @Override
+    public void setTipos(String Tipos) {
+        this.Tipos="Life";
+    }
     
-    public abstract  void setTipos(String Tipos);
 }
