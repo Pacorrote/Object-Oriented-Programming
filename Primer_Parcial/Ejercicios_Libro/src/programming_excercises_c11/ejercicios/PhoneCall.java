@@ -11,7 +11,7 @@ public abstract class PhoneCall {
     
     public PhoneCall(String NumeroT) {
         this.NumeroT = NumeroT;
-        this.Precio = 0.0f;
+        this.Precio = 0.0;
     }
     
     public abstract String getNumeroT();
