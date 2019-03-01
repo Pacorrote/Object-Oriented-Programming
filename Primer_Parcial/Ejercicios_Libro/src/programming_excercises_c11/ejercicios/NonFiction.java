@@ -24,6 +24,6 @@ public class NonFiction extends Book{
     
     @Override
     public String toString(){
-        return String.format("El libro "+this.titulo+" su precio es "+this.precio);
+        return String.format("El libro %s su precio es %.2f", this.titulo, this.precio);
     }
 }
