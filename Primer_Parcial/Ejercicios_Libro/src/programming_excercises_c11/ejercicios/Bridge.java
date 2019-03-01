@@ -14,7 +14,8 @@ public class Bridge extends CardGame{
     
     @Override
     public String displayDescription() {
-        return String.format("Bridge\nEl tipo de carta "+mazo+" de numero "+number+"\tSe le han repartido"+repartidas+" cartas");
+        return String.format("Bridge\nEl tipo de carta %s de numero %d\tSe le han repartido %d cartas",
+        		this.mazo, this.number, this.repartidas);
     }
     @Override
     public void deal() {
