@@ -8,8 +8,8 @@ package programming_excercises_c11.ejercicios;
 
 public class Fiction extends Book {
 
-    public Fiction(String title, Double price) {
-        super(title, price);
+    public Fiction(String titulo, Double precio) {
+        super(titulo, precio);
         setPrecio();
     }
     @Override
