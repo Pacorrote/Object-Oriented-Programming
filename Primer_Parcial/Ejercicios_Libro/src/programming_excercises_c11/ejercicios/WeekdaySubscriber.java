@@ -12,7 +12,7 @@ public class WeekdaySubscriber extends NewspaperSubscriber {
         setTasa();
     }
     public String toString(){
-        return String.format("Calle:%s  ,  Tarifa:%.2f  ,  TipoWeekday",this.getCalle(),this.getTasa());
+        return String.format("Calle:%s, Tarifa:%.2f, TipoWeekday",this.getCalle(),this.getTasa());
     }
 
     @Override
