@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming_excercises_c11.ejercicios;
 
 
@@ -20,7 +15,7 @@ public class Life extends Insurance {
     }
     @Override
     public void Setcos() {
-        this.Precio=36;
+        this.Precio=(double) 36;
     }
 
     @Override
