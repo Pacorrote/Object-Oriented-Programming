@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming_excercises_c11.ejercicios;
 
 public abstract class Story {
-    public String title;
-    public String author;
-    public Integer pages;
-    public String message;
+    protected String title;
+    protected String author;
+    protected Integer pages;
+    protected String message;
 
     public Story(String title, String author, Integer pages) {
         this.title = title;
