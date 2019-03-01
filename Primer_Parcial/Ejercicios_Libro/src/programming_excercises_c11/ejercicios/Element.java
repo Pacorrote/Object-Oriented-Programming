@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming_excercises_c11.ejercicios;
 
 
 public abstract class Element {
-    public String name;
-    public String symbol;
-    public Integer atomic;
-    public Float atomicWeigth;
+    protected String name;
+    protected String symbol;
+    protected Integer atomic;
+    protected Float atomicWeigth;
 
     public Element(String name, String symbol, Integer atomic, Float atomicWeigth) {
         this.name = name;
