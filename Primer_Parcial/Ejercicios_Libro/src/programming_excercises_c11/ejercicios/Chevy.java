@@ -18,7 +18,7 @@ public class Chevy extends Auto {
     }
     
      public String toString(){
-        return String.format("Marca:%s\nPracio:%d",this.Marca,this.Precio);
+        return String.format("Marca:%s\nPrecio:%d",this.Marca,this.Precio);
     }
     
 }
