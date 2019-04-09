@@ -12,10 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Victor
- */
+
 public class FuncionSudoku {
     public int[][] matriz;
     private ArrayList<Character>lista;
