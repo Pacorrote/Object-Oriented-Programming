@@ -16,10 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-/**
- *
- * @author Victor
- */
+
 public class DialogoDatos extends JDialog {
     private JTextField edtName;
     private JTextField edtEdad;
