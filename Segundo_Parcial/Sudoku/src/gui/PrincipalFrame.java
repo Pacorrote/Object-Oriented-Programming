@@ -26,11 +26,6 @@ import javax.swing.KeyStroke;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import objetos.FuncionSudoku;
-
-/**
- *
- * @author Victor
- */
 public class PrincipalFrame extends JFrame{
     private JLabel error;
     private JButton btnjugar;
