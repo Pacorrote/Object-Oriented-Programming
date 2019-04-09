@@ -5,10 +5,7 @@
  */
 package objetos;
 
-/**
- *
- * @author Victor
- */
+
 import files.GenericFile;
 import files.Modo;
 import files.exception.ModoAperturaIncorrectoException;
@@ -17,10 +14,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- *
- * @author karimnot
- */
 public class TextFile extends GenericFile {
 
     public static final Integer EOL = 10;
