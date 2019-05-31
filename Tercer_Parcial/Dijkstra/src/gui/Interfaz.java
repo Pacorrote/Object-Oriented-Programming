@@ -6,6 +6,7 @@ import java.awt.Dimension;
 
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import excepciones.NoFinException;
 import excepciones.NoInicioException;
@@ -63,7 +64,10 @@ public class Interfaz extends JFrame{
 					 pnlMenu.getResultado().setText(String.valueOf(Dijkstra.dijkstra(getSolución().getInicio(), suma)));
 				} catch (NoFinException e) {
 					// TODO: handle exception
-					
+					JOptionPane.showMessageDialog(getContentPane(), 
+							e.getMessage(),
+							"ERROR",
+							JOptionPane.ERROR_MESSAGE);
 				} 
 			}
 		});

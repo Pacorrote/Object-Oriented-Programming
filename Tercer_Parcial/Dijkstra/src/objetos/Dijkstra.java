@@ -112,7 +112,7 @@ public class Dijkstra {
 			return menorCosto();
 		}
 		else {
-			throw new NoFinException();
+			throw new NoFinException("Nodo fin no indicado");
 		}
 	}
 	
