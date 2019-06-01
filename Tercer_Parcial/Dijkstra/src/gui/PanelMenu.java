@@ -68,7 +68,13 @@ public class PanelMenu extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				pnlMenuListener.eliminarNodoArista(true);
+				if(eliminarDibujo.isSelected()) {
+					pnlMenuListener.eliminarNodoArista(true);
+				}
+				else {
+					pnlMenuListener.eliminarNodoArista(false);
+				}
+				
 			}
 		});
 		pnlresultado = new JPanel();

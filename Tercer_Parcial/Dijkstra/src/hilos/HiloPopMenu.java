@@ -19,7 +19,6 @@ public class HiloPopMenu extends Thread{
 	public void run() {
 		// TODO Auto-generated method stub
 		pnlGrafo.mostrarPopMenu(evento);
-		yield();
 	}
 	
 	

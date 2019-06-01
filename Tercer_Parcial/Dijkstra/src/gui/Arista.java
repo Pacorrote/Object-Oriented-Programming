@@ -14,6 +14,7 @@ public class Arista {
 	private Integer x2;
 	private Integer y2;
 	private Integer indiceP;
+
 	
 	public static final Float DEFAULTGROSOR = (float) 4;
 	
@@ -98,7 +99,7 @@ public class Arista {
 		else {
 			if(numero!=null) {
 				g1.setFont(new Font("Futura", Font.BOLD, 20));
-				g1.drawString(numero.toString(), ((p.getX()+t.getX())/2)+10, ((p.getY()+t.getY())/2)+10);
+				g1.drawString(numero.toString(), puntoMedioX()+10, puntoMedioY()+10);
 			}
 			g1.drawLine(p.getX(), p.getY(), t.getX(), t.getY());
 		}
@@ -110,6 +111,34 @@ public class Arista {
 
 	public void setIndiceP(Integer indiceP) {
 		this.indiceP = indiceP;
+	}
+	
+	public Float puntoMedioX() {
+		float xpm;
+		if(t!=null) {
+			xpm = t.getX()+p.getX();
+			xpm = xpm/2;
+			return xpm;
+		}
+		else {
+			xpm = x2+p.getX();
+			xpm = xpm/2;
+			return xpm;
+		}
+	}
+	
+	public Float puntoMedioY() {
+		float ypm;
+		if(t!=null) {
+			ypm = t.getY()+p.getY();
+			ypm = ypm/2;
+			return ypm;
+		}
+		else {
+			ypm = y2+p.getY();
+			ypm = ypm/2;
+			return ypm;
+		}
 	}
 	
 	

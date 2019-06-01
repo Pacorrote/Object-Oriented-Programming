@@ -22,6 +22,7 @@ import javax.swing.JPopupMenu;
 import excepciones.InicioOcupadoException;
 import hilos.HiloDibujarArista;
 import hilos.HiloPopMenu;
+import hilos.HiloSelArista;
 import hilos.HiloSelNodo;
 import objetos.AristaStatus;
 
@@ -35,8 +36,10 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	private Arista auxArista;
 	private Integer a = 0;
 	private JPopupMenu menuClickDer;
-	private JMenuItem opciones [] = new JMenuItem [3];
-	private String nombreOpciones [] = {"Añadir/Renombrar Nodo","Nodo inicio","Nodo final"}; 
+	private JMenuItem opcionesNodo [] = new JMenuItem [3];
+	private JMenuItem opcionesArista [] = new JMenuItem[2];
+	private String nombreOpcionesNodo [] = {"Añadir/Renombrar Nodo","Nodo inicio","Nodo final"}; 
+	private String nombreOpcionesArista [] = {"Cambiar Valor","Cambiar color"};
 	private Random random;
 	private JLabel etiqueta;
 	private ArrayList<Arista> aristaAuxiliares;
@@ -44,15 +47,19 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	public PanelGrafo() {
 		// TODO Auto-generated constructor stub
 		this.nodos = new ArrayList<>();
+		this.aristaAuxiliares = new ArrayList<>();
 		eliminarNodoArista = false;
 		status = AristaStatus.NO_PINTAR;
 		menuClickDer = new JPopupMenu();
-		for (int i = 0; i < opciones.length; i++) {
-			opciones[i] = new JMenuItem(nombreOpciones[i]);
-			opciones[i].setFont(new Font("Futura", 0, 18));
-			menuClickDer.add(opciones[i]);
+		for (int i = 0; i < opcionesNodo.length; i++) {
+			opcionesNodo[i] = new JMenuItem(nombreOpcionesNodo[i]);
+			opcionesNodo[i].setFont(new Font("Futura", 0, 18));
 		}
-		opciones[0].addActionListener(new ActionListener() {
+		for (int i = 0; i < opcionesArista.length; i++) {
+			opcionesArista[i] = new JMenuItem(nombreOpcionesArista[i]);
+			opcionesArista[i].setFont(new Font("Futura", 0, 18));
+		}
+		opcionesNodo[0].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -68,58 +75,59 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 					 }
 				} while (nombre==' ');
 				auxNodo.setNombre(nombre);
+				menuClickDer.removeAll();
 				updateUI();
 			}
 		});
 		random = new Random();
-		opciones[1].addActionListener(new ActionListener() {
+		opcionesNodo[1].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(auxNodo.isFin()) {
-					try {
-						throw new InicioOcupadoException();
-					} catch (InicioOcupadoException e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(getThis(), 
-								e1.getMessage(),
-								"ERROR",
-								JOptionPane.ERROR_MESSAGE);
-					}
-				}
-				else {
-					int r=random.nextInt(254)+1, g=random.nextInt(254)+1, b=random.nextInt(254)+1;
-					auxNodo.setInicio(true);
-					auxNodo.setColor(new Color(r, g, b));
-					repaint();
-					opciones[1].setEnabled(false);
-				}
+				
+				menuClickDer.removeAll();
 			}
 		});
-		opciones[2].addActionListener(new ActionListener() {
+		opcionesNodo[2].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(auxNodo.isInicio()) {
+				
+				menuClickDer.removeAll();
+			}
+		});
+		opcionesArista[0].addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				boolean noerror = false;
+				do {
 					try {
-						throw new InicioOcupadoException();
-					} catch (InicioOcupadoException e1) {
-						// TODO Auto-generated catch block
+						auxArista.setNumero(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el valor de la arista")));
+						repaint();
+						noerror=false;
+					} catch (NumberFormatException errorIdiotoJajaj) {
+						// TODO: handle exception
 						JOptionPane.showMessageDialog(getThis(), 
-								e1.getMessage(),
+								"Campo vacio/Caracter inválido",
 								"ERROR",
 								JOptionPane.ERROR_MESSAGE);
+						noerror=true;
 					}
-				}
-				else {
-					int r=random.nextInt(254)+1, g=random.nextInt(254)+1, b=random.nextInt(254)+1;
-					auxNodo.setFin(true);
-					auxNodo.setColor(new Color(r, g, b));
-					repaint();
-					opciones[2].setEnabled(false);
-				}
+				}while(noerror);
+				menuClickDer.removeAll();
+			}
+		});
+		opcionesArista[1].addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				menuClickDer.removeAll();
 			}
 		});
 		addMouseMotionListener(this);
@@ -132,11 +140,11 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	}
 	
 	public String[] getNombreOpciones() {
-		return nombreOpciones;
+		return nombreOpcionesNodo;
 	}
 
 	public void setNombreOpciones(String[] nombreOpciones) {
-		this.nombreOpciones = nombreOpciones;
+		this.nombreOpcionesNodo = nombreOpciones;
 	}
 
 	public Arista getAuxArista() {
@@ -224,11 +232,14 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 				}
 				etiqueta.setText("");
 			}
+			menuClickDer.removeAll();
 		}
 		else if(e.getButton()==MouseEvent.BUTTON3){
 			HiloSelNodo hilo3 = new HiloSelNodo(this, e);
+			HiloSelArista hilo5 = new HiloSelArista(this, e);
 			HiloPopMenu hilo4 = new HiloPopMenu(this, e);
 			hilo3.start();
+			hilo5.start();
 			hilo4.start();
 		}
 	}
@@ -238,6 +249,7 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getButton()==MouseEvent.BUTTON1) {
+			HiloSelArista.setStatus(false);
 			HiloSelNodo hilo1 = new HiloSelNodo(this, e);
 			hilo1.start();
 		}
@@ -247,8 +259,8 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(status == AristaStatus.Pintar) {
-			if(isNodo(e)) {
-				
+			if(isNodo(e) && auxNodo!=auxNodo1) {
+				aristaAuxiliares.add(auxArista);
 				auxArista.setT(auxNodo1, a);
 				repaint();
 				boolean noerror = false;
@@ -328,17 +340,39 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	public void seleccionarNodo(MouseEvent e) {
 		int a = 0;
 		boolean encontrado = false;
-		while(a<nodos.size() && !encontrado) {
-			Nodo aux = nodos.get(a);
-			if((e.getX()<=aux.getX()+40 
-					&& e.getX()>=aux.getX()-40)
-					&& (e.getY()<=aux.getY()+40
-					&& e.getY()>=aux.getY()-40)) {
-				auxNodo = aux;
-				this.a = a;
-				encontrado = true;
+		synchronized (this) {
+			while(a<nodos.size() && !encontrado && !HiloSelArista.getStatus()) {
+				Nodo aux = nodos.get(a);
+				if((e.getX()<=aux.getX()+40 
+						&& e.getX()>=aux.getX()-40)
+						&& (e.getY()<=aux.getY()+40
+						&& e.getY()>=aux.getY()-40)) {
+					auxNodo = aux;
+					this.a = a;
+					encontrado = true;
+					HiloSelNodo.setStatus(encontrado);
+				}
+				a++;
 			}
-			a++;
+		}
+		
+	}
+	public void seleccionarArista(MouseEvent evento) {
+		int a = 0;
+		boolean encontrado = false;
+		synchronized (this) {
+			while(a<aristaAuxiliares.size() && !encontrado && !HiloSelNodo.getStatus()) {
+				Arista aux = aristaAuxiliares.get(a);
+				if((evento.getX()<=aux.puntoMedioX()+40 
+						&& evento.getX()>=aux.puntoMedioX()-40)
+						&& (evento.getY()<=aux.puntoMedioY()+40
+						&& evento.getY()>=aux.puntoMedioY()-40)) {
+					auxArista = aux;
+					encontrado = true;
+					System.out.println(encontrado);
+					HiloSelArista.setStatus(encontrado);
+				}
+			}
 		}
 	}
 	
@@ -360,13 +394,27 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 		return encontrado;
 	}
 	
-	public void mostrarPopMenu(MouseEvent evento) {
+	public synchronized void mostrarPopMenu(MouseEvent evento) {
+		Boolean nada = true;
 		do {
 			if(auxNodo!=null) {
-				System.out.println("Si entré");
+				System.out.println("Nodo");
+				for (int i = 0; i < opcionesNodo.length; i++) {
+					menuClickDer.add(opcionesNodo[i]);
+				}
 				menuClickDer.show(this, evento.getX(), evento.getY());
+				nada = false;
 			}
-		}while(auxNodo==null);
+			else if(HiloSelArista.getStatus()){
+				for (int i = 0; i < opcionesArista.length; i++) {
+					menuClickDer.add(opcionesArista[i]);
+				}
+				menuClickDer.show(this, evento.getX(), evento.getY());
+				nada = false;
+				System.out.println(nada);
+			}
+			HiloPopMenu.yield();
+		} while (nada);
 	}
 
 	public Integer getA() {

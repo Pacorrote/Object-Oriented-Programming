@@ -9,6 +9,7 @@ public class HiloSelNodo extends Thread{
 	
 	private PanelGrafo pnlGrafo;
 	private MouseEvent e;
+	private static Boolean status = false;
 	
 	public HiloSelNodo() {
 		// TODO Auto-generated constructor stub
@@ -18,6 +19,7 @@ public class HiloSelNodo extends Thread{
 		// TODO Auto-generated constructor stub
 		this.pnlGrafo = pnlGrafo;
 		this.e = e;
+		HiloSelNodo.status = false;
 	}
 	
 
@@ -28,7 +30,16 @@ public class HiloSelNodo extends Thread{
 	public void setPnlGrafo(PanelGrafo pnlGrafo) {
 		this.pnlGrafo = pnlGrafo;
 	}
+	
 
+	public static Boolean getStatus() {
+		return status;
+	}
+	
+
+	public static void setStatus(Boolean status) {
+		HiloSelNodo.status = status;
+	}
 
 	@Override
 	public void run() {
