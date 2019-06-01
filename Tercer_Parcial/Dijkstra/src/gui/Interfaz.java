@@ -72,6 +72,7 @@ public class Interfaz extends JFrame{
 			}
 		});
         pnlMenu.setPreferredSize(new Dimension(200, 700));
+        pnlGrafo.setEtiqueta(pnlMenu.getResultado());
         super.add(pnlGrafo, BorderLayout.CENTER);
         super.add(pnlMenu, BorderLayout.EAST);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

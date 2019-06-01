@@ -82,7 +82,10 @@ public class Arista {
 		setX2(t.getX());
 		setY2(t.getY());
 		this.indiceP = index;
-		t.setIndiceP(indiceP);
+		t.getArraylistIndiceP().add(indiceP);
+		for (int numero : t.getArraylistIndiceP()) {
+			System.out.println(numero);
+		}
 	}
 	
 	public void pintarArista(Graphics g) {

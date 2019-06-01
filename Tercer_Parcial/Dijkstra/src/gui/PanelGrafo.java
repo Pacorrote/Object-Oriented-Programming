@@ -5,12 +5,15 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,7 +25,7 @@ import hilos.HiloPopMenu;
 import hilos.HiloSelNodo;
 import objetos.AristaStatus;
 
-public class PanelGrafo extends JPanel implements MouseMotionListener, MouseListener{
+public class PanelGrafo extends JPanel implements MouseMotionListener, MouseListener, KeyListener{
 	
 	private ArrayList<Nodo> nodos;
 	private Nodo auxNodo;
@@ -35,6 +38,8 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	private JMenuItem opciones [] = new JMenuItem [3];
 	private String nombreOpciones [] = {"Añadir/Renombrar Nodo","Nodo inicio","Nodo final"}; 
 	private Random random;
+	private JLabel etiqueta;
+	private ArrayList<Arista> aristaAuxiliares;
 	
 	public PanelGrafo() {
 		// TODO Auto-generated constructor stub
@@ -119,6 +124,7 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 		});
 		addMouseMotionListener(this);
 		addMouseListener(this);
+		addKeyListener(this);
 	}
 	
 	public PanelGrafo getThis() {
@@ -148,8 +154,6 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	public void setStatus(AristaStatus status) {
 		this.status = status;
 	}
-
-
 
 	public void addNodo(Nodo nodo) {
 		this.nodos.add(nodo);
@@ -184,6 +188,7 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 			if(eliminarNodoArista) {
 				int a1 = -1;
 				int a = 0;
+				int a2 = 0;
 				boolean listo = false;
 				while(a<nodos.size() && !listo) {
 					++a1;
@@ -191,18 +196,25 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 							&& e.getX()>=nodos.get(a1).getX()-40)
 							&& (e.getY()<=nodos.get(a1).getY()+40
 							&& e.getY()>=nodos.get(a1).getY()-40)) {
-						if(nodos.get(a1).getIndiceP()!=null) {
-							System.out.println("No soy nulo");
-							Nodo auxN1 = nodos.get(a1);
-							Nodo auxN2 = nodos.get(auxN1.getIndiceP());
-							boolean cerrarCiclo = false;
-							while(a<auxN2.getAristas().size() && !cerrarCiclo) {
-								Arista auxA1 = auxN2.getAristas().get(a);
-								if(auxA1.getT()==auxN1) {
-									auxN2.getAristas().remove(auxA1);
-									cerrarCiclo=true;
+						
+						if(nodos.get(a1).getArraylistIndiceP().size()>0) {
+							while(a2<nodos.get(a1).getArraylistIndiceP().size()) {
+								Nodo auxN1 = nodos.get(a1);
+								int indice = auxN1.getArraylistIndiceP().get(a2);
+								Nodo auxN2 = nodos.get(indice);
+								boolean cerrarCiclo = false;
+								a=0;
+								while(a<auxN2.getAristas().size() && !cerrarCiclo) {
+									Arista auxA1 = auxN2.getAristas().get(a);
+									System.out.println("voy a borrar arista");
+									if(auxA1.getT()==auxN1) {
+										System.out.println("Borrar arista");
+										auxN2.getAristas().remove(auxA1);
+										cerrarCiclo=true;
+									}
+									a++;
 								}
-								a++;
+								a2++;
 							}
 						}
 						nodos.remove(a1);
@@ -210,6 +222,7 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 						repaint();
 					}
 				}
+				etiqueta.setText("");
 			}
 		}
 		else if(e.getButton()==MouseEvent.BUTTON3){
@@ -377,5 +390,37 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 			a++;
 		}
 	}
+
+	@Override
+	public void keyTyped(KeyEvent teclado) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent teclado) {
+		// TODO Auto-generated method stub
+		System.out.println(teclado.getKeyCode());
+		if(teclado.getKeyCode()==KeyEvent.VK_ESCAPE) {
+			System.out.println("Que onda");
+			borrarArista();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public JLabel getEtiqueta() {
+		return etiqueta;
+	}
+
+	public void setEtiqueta(JLabel etiqueta) {
+		this.etiqueta = etiqueta;
+	}
+	
+	
 	
 }

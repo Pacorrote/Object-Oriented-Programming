@@ -15,7 +15,7 @@ public class Nodo {
 	private Boolean fin;
 	private Integer x;
 	private Integer y;
-	private Integer indiceP;
+	private ArrayList<Integer> arraylistIndiceP;
 	private Color color;
 	private Font fuente = new Font("Aqua", Font.PLAIN, 20);
 	
@@ -27,6 +27,7 @@ public class Nodo {
 		this.inicio = false;
 		this.fin = false;
 		this.color = Color.BLACK;
+		this.arraylistIndiceP = new ArrayList<>();
 	}
 	
 	public Nodo(Integer x, Integer y) {
@@ -37,6 +38,7 @@ public class Nodo {
 		this.x = x;
 		this.y = y;
 		this.color = Color.BLACK;
+		this.arraylistIndiceP = new ArrayList<>();
 	}
 	
 	public Integer getX() {
@@ -139,14 +141,15 @@ public class Nodo {
 		}
 	}
 	
-	public Integer getIndiceP() {
-		return indiceP;
+	
+	public ArrayList<Integer> getArraylistIndiceP() {
+		return arraylistIndiceP;
 	}
 
-	public void setIndiceP(Integer indiceP) {
-		this.indiceP = indiceP;
+	public void setArraylistIndiceP(ArrayList<Integer> arraylistIndiceP) {
+		this.arraylistIndiceP = arraylistIndiceP;
 	}
-	
+
 	public void pintarNodo(Graphics g) {
 		Graphics2D g1 = (Graphics2D) g;
 		g1.setStroke(new BasicStroke(DEFAULTGROSOR));
