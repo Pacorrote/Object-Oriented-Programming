@@ -1,5 +1,6 @@
 package gui;
 
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -66,7 +67,8 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 				// TODO Auto-generated method stub
 				char nombre;
 				do {
-					 nombre = JOptionPane.showInputDialog("Ingrese el valor de la arista").charAt(0);
+					 nombre = JOptionPane.showInputDialog("Ingrese el Nombre (Un solo "
+					 		+ "caracter) del nodo").charAt(0);
 					 if(nombre==' ') {
 						 JOptionPane.showMessageDialog(getThis(), 
 									"Campo vacio/Caracter inválido",
@@ -107,7 +109,7 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 				do {
 					try {
 						auxArista.setNumero(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el valor de la arista")));
-						repaint();
+						updateUI();
 						noerror=false;
 					} catch (NumberFormatException errorIdiotoJajaj) {
 						// TODO: handle exception
@@ -200,6 +202,7 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 				boolean listo = false;
 				while(a<nodos.size() && !listo) {
 					++a1;
+					System.out.println(a1);
 					if((e.getX()<=nodos.get(a1).getX()+40
 							&& e.getX()>=nodos.get(a1).getX()-40)
 							&& (e.getY()<=nodos.get(a1).getY()+40
