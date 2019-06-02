@@ -38,12 +38,18 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	private Integer a = 0;
 	private JPopupMenu menuClickDer;
 	private JMenuItem opcionesNodo [] = new JMenuItem [3];
+	private JMenuItem opcionesNodoInicio[] = new JMenuItem [2];
+	private JMenuItem opcionesNodoFin[] = new JMenuItem [2];
 	private JMenuItem opcionesArista [] = new JMenuItem[2];
 	private String nombreOpcionesNodo [] = {"Añadir/Renombrar Nodo","Nodo inicio","Nodo final"}; 
+	private String nombreOpcionesNodoInicio [] =  {"Añadir/Renombrar Nodo","Quitar Nodo Inicio"};
+	private String nombreOpcionesNodoFin [] = {"Añadir/Renombrar Nodo","Quitar Nodo final"};
 	private String nombreOpcionesArista [] = {"Cambiar Valor","Cambiar color"};
 	private Random random;
 	private JLabel etiqueta;
 	private ArrayList<Arista> aristaAuxiliares;
+	private HiloPopMenu hiloPopMenu;
+
 	
 	public PanelGrafo() {
 		// TODO Auto-generated constructor stub
@@ -52,14 +58,24 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 		eliminarNodoArista = false;
 		status = AristaStatus.NO_PINTAR;
 		menuClickDer = new JPopupMenu();
+		menuClickDer.setFocusable(false);
 		for (int i = 0; i < opcionesNodo.length; i++) {
 			opcionesNodo[i] = new JMenuItem(nombreOpcionesNodo[i]);
 			opcionesNodo[i].setFont(new Font("Futura", 0, 18));
+		}
+		for (int i = 0; i < opcionesNodoInicio.length; i++) {
+			opcionesNodoInicio[i] = new JMenuItem(nombreOpcionesNodoInicio[i]);
+			opcionesNodoInicio[i].setFont(new Font("Futura", 0, 18));
+		}
+		for (int j = 0; j < opcionesNodoFin.length; j++) {
+			opcionesNodoFin[j] = new JMenuItem(nombreOpcionesNodoFin[j]);
+			opcionesNodoFin[j].setFont(new Font("Futura", 0, 18));
 		}
 		for (int i = 0; i < opcionesArista.length; i++) {
 			opcionesArista[i] = new JMenuItem(nombreOpcionesArista[i]);
 			opcionesArista[i].setFont(new Font("Futura", 0, 18));
 		}
+		
 		opcionesNodo[0].addActionListener(new ActionListener() {
 
 			@Override
@@ -87,8 +103,12 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				int r = random.nextInt(254)+1, g = random.nextInt(254)+1, b = random.nextInt(254)+1;
+				auxNodo.setColor(new Color(r, g, b));
+				auxNodo.setInicio(true);
+				opcionesNodo[1].setEnabled(false);
 				menuClickDer.removeAll();
+				updateUI();
 			}
 		});
 		opcionesNodo[2].addActionListener(new ActionListener() {
@@ -96,8 +116,78 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				int r = random.nextInt(254)+1, g = random.nextInt(254)+1, b = random.nextInt(254)+1;
+				auxNodo.setColor(new Color(r, g, b));
+				auxNodo.setFin(true);
+				opcionesNodo[2].setEnabled(false);
 				menuClickDer.removeAll();
+				updateUI();
+			}
+		});
+		opcionesNodoInicio[0].addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				char nombre;
+				do {
+					 nombre = JOptionPane.showInputDialog("Ingrese el Nombre (Un solo "
+					 		+ "caracter) del nodo").charAt(0);
+					 if(nombre==' ') {
+						 JOptionPane.showMessageDialog(getThis(), 
+									"Campo vacio/Caracter inválido",
+									"ERROR",
+									JOptionPane.ERROR_MESSAGE);
+					 }
+				} while (nombre==' ');
+				auxNodo.setNombre(nombre);
+				menuClickDer.removeAll();
+				updateUI();
+			}
+		});
+		opcionesNodoInicio[1].addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				auxNodo.setInicio(false);
+				auxNodo.setColor(Color.BLACK);
+				opcionesNodo[1].setEnabled(true);
+				menuClickDer.removeAll();
+				updateUI();
+			}
+		});
+		opcionesNodoFin[0].addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				char nombre;
+				do {
+					 nombre = JOptionPane.showInputDialog("Ingrese el Nombre (Un solo "
+					 		+ "caracter) del nodo").charAt(0);
+					 if(nombre==' ') {
+						 JOptionPane.showMessageDialog(getThis(), 
+									"Campo vacio/Caracter inválido",
+									"ERROR",
+									JOptionPane.ERROR_MESSAGE);
+					 }
+				} while (nombre==' ');
+				auxNodo.setNombre(nombre);
+				menuClickDer.removeAll();
+				updateUI();
+			}
+		});
+		opcionesNodoFin[1].addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				auxNodo.setFin(false);
+				auxNodo.setColor(Color.BLACK);
+				opcionesNodo[2].setEnabled(true);
+				menuClickDer.removeAll();
+				updateUI();
 			}
 		});
 		opcionesArista[0].addActionListener(new ActionListener() {
@@ -121,6 +211,7 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 					}
 				}while(noerror);
 				menuClickDer.removeAll();
+				updateUI();
 			}
 		});
 		opcionesArista[1].addActionListener(new ActionListener() {
@@ -204,10 +295,10 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 				while(a<nodos.size() && !listo) {
 					++a1;
 					System.out.println(a1);
-					if((e.getX()<=nodos.get(a1).getX()+40
-							&& e.getX()>=nodos.get(a1).getX()-40)
-							&& (e.getY()<=nodos.get(a1).getY()+40
-							&& e.getY()>=nodos.get(a1).getY()-40)) {
+					if((e.getX()<=nodos.get(a1).getX()+50
+							&& e.getX()>=nodos.get(a1).getX()-50)
+							&& (e.getY()<=nodos.get(a1).getY()+50
+							&& e.getY()>=nodos.get(a1).getY()-50)) {
 						
 						if(nodos.get(a1).getArraylistIndiceP().size()>0) {
 							while(a2<nodos.get(a1).getArraylistIndiceP().size()) {
@@ -229,6 +320,12 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 								a2++;
 							}
 						}
+						if(nodos.get(a1).isInicio()) {
+							opcionesNodo[1].setEnabled(true);
+						}
+						else if(nodos.get(a1).isFin()) {
+							opcionesNodo[2].setEnabled(true);
+						}
 						nodos.remove(a1);
 						listo = true;
 						repaint();
@@ -241,10 +338,10 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 		else if(e.getButton()==MouseEvent.BUTTON3){
 			HiloSelNodo hilo3 = new HiloSelNodo(this, e);
 			HiloSelArista hilo5 = new HiloSelArista(this, e);
-			HiloPopMenu hilo4 = new HiloPopMenu(this, e);
+			hiloPopMenu = new HiloPopMenu(this, e);
 			hilo3.start();
 			hilo5.start();
-			hilo4.start();
+			hiloPopMenu.start();
 		}
 	}
 	
@@ -347,14 +444,17 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 		synchronized (this) {
 			while(a<nodos.size() && !encontrado && !HiloSelArista.getStatus()) {
 				Nodo aux = nodos.get(a);
-				if((e.getX()<=aux.getX()+40 
-						&& e.getX()>=aux.getX()-40)
-						&& (e.getY()<=aux.getY()+40
-						&& e.getY()>=aux.getY()-40)) {
-					auxNodo = aux;
-					this.a = a;
-					encontrado = true;
-					HiloSelNodo.setStatus(encontrado);
+				synchronized (e) {
+					if((e.getX()<=aux.getX()+40 
+							&& e.getX()>=aux.getX()-40)
+							&& (e.getY()<=aux.getY()+40
+							&& e.getY()>=aux.getY()-40)) {
+						System.out.println("Nodo encontrado");
+						auxNodo = aux;
+						this.a = a;
+						encontrado = true;
+						HiloSelNodo.setStatus(encontrado);
+					}
 				}
 				a++;
 			}
@@ -367,14 +467,16 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 		synchronized (this) {
 			while(a<aristaAuxiliares.size() && !encontrado && !HiloSelNodo.getStatus()) {
 				Arista aux = aristaAuxiliares.get(a);
-				if((evento.getX()<=aux.puntoMedioX()+40 
-						&& evento.getX()>=aux.puntoMedioX()-40)
-						&& (evento.getY()<=aux.puntoMedioY()+40
-						&& evento.getY()>=aux.puntoMedioY()-40)) {
-					auxArista = aux;
-					encontrado = true;
-					System.out.println(encontrado);
-					HiloSelArista.setStatus(encontrado);
+				synchronized (evento) {
+					if((evento.getX()<=aux.puntoMedioX()+40 
+							&& evento.getX()>=aux.puntoMedioX()-40)
+							&& (evento.getY()<=aux.puntoMedioY()+40
+							&& evento.getY()>=aux.puntoMedioY()-40)) {
+						auxArista = aux;
+						encontrado = true;
+						System.out.println(encontrado);
+						HiloSelArista.setStatus(encontrado);
+					}
 				}
 			}
 		}
@@ -385,10 +487,10 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 		boolean encontrado = false;
 		while(a<nodos.size() && !encontrado) {
 			Nodo aux = nodos.get(a);
-			if((evento.getX()<=aux.getX()+40 
-					&& evento.getX()>=aux.getX()-40)
-					&& (evento.getY()<=aux.getY()+40
-					&& evento.getY()>=aux.getY()-40)) {
+			if((evento.getX()<=aux.getX()+50 
+					&& evento.getX()>=aux.getX()-50)
+					&& (evento.getY()<=aux.getY()+50
+					&& evento.getY()>=aux.getY()-50)) {
 				auxNodo1 = aux;
 				System.out.println("Valor: "+this.a);
 				encontrado = true;
@@ -398,14 +500,28 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 		return encontrado;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public synchronized void mostrarPopMenu(MouseEvent evento) {
 		Boolean nada = true;
 		do {
 			if(auxNodo!=null) {
 				System.out.println("Nodo");
-				for (int i = 0; i < opcionesNodo.length; i++) {
-					menuClickDer.add(opcionesNodo[i]);
+				if(!auxNodo.isInicio() && !auxNodo.isFin()) {
+					for (int i = 0; i < opcionesNodo.length; i++) {
+						menuClickDer.add(opcionesNodo[i]);
+					}
 				}
+				else if(auxNodo.isInicio()) {
+					for (int i = 0; i < opcionesNodoInicio.length; i++) {
+						menuClickDer.add(opcionesNodoInicio[i]);
+					}
+				}
+				else if(auxNodo.isFin()) {
+					for (int i = 0; i < opcionesNodoFin.length; i++) {
+						menuClickDer.add(opcionesNodoFin[i]);
+					}
+				}
+				
 				menuClickDer.show(this, evento.getX(), evento.getY());
 				nada = false;
 			}
@@ -416,6 +532,10 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 				menuClickDer.show(this, evento.getX(), evento.getY());
 				nada = false;
 				System.out.println(nada);
+			}
+			else if(auxNodo==null) {
+				hiloPopMenu.stop();
+				System.out.println("Estoy corriendo como bruto");
 			}
 			HiloPopMenu.yield();
 		} while (nada);

@@ -7,6 +7,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 import excepciones.NoFinException;
 import excepciones.NoInicioException;
@@ -61,7 +62,7 @@ public class Interfaz extends JFrame{
 				 int suma = 0; 
 				 setSolucion(solucion);
 				 try {
-					 pnlMenu.getResultado().setText(String.valueOf(Dijkstra.dijkstra(getSolución().getInicio(), suma)));
+					 pnlMenu.getResultado().setText(String.valueOf(Dijkstra.dijkstraCosto(getSolución().getInicio(), suma)));
 				} catch (NoFinException e) {
 					// TODO: handle exception
 					JOptionPane.showMessageDialog(getContentPane(), 

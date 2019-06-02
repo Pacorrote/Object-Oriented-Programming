@@ -57,6 +57,7 @@ public class PanelMenu extends JPanel{
 		arista.setFocusable(false);
 		resolver = new JButton("Resolver");
 		resolver.setFont(fuente);
+		resolver.setFocusable(false);
 		resolver.addActionListener(new ActionListener() {
 			
 			@Override

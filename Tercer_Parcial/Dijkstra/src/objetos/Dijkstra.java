@@ -23,6 +23,8 @@ public class Dijkstra {
 	
 	private static Boolean hayFin;
 	
+	private static ArrayList<Ruta> rutas;
+	
 	public JFrame getParent() {
 		return parent;
 	}
@@ -105,7 +107,7 @@ public class Dijkstra {
 		}
 	}
 	
-	public static Integer dijkstra(Nodo inicio, int suma) throws NoFinException {
+	public static Integer dijkstraCosto(Nodo inicio, int suma) throws NoFinException {
 		if(hayFin) {
 			costos = new ArrayList<>();
 			suma=0;
@@ -116,6 +118,35 @@ public class Dijkstra {
 			throw new NoFinException("Nodo fin no indicado");
 		}
 	}
+	
+	private static void recorrer(Nodo inicio, ArrayList<Arista> aristas, int suma) {
+		inicio.ordenarAristas();
+		for (Arista arista : inicio.getAristas()) {
+			aristas.add(arista);
+			if(!arista.getT().isFin()) {
+				recorrer(arista.getT(), aristas, suma+arista.getNumero());
+			}
+			else {
+				suma+=arista.getNumero();
+				rutas.add(new Ruta(Ruta.aristas(aristas), suma));
+				suma-=arista.getNumero();
+				aristas.remove(aristas.size()-1);
+			}
+		}
+	}
+	
+	public static void dijkstraRutas(Nodo inicio, int suma) throws NoFinException {
+		if(hayFin) {
+			rutas = new ArrayList<>();
+			suma = 0;
+			recorrer(inicio, new ArrayList<Arista>(), suma);
+		}
+		else {
+			throw new NoFinException("Nodo fin no indicado");
+		}
+	}
+	
+	
 	
 	private static Integer menorCosto() {
 		int aux = costos.get(0);
