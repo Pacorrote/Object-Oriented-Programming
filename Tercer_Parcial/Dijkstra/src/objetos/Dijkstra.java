@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import excepciones.NoFinException;
 import excepciones.NoInicioException;
+import excepciones.NodoFinNoConectadoException;
 import gui.Arista;
 import gui.Nodo;
 
@@ -42,7 +43,7 @@ public class Dijkstra {
 	}
 
 
-	public Dijkstra(ArrayList<Nodo> nodos, JFrame parent) {
+	public Dijkstra(ArrayList<Nodo> nodos, JFrame parent) throws NodoFinNoConectadoException {
 		// TODO Auto-generated constructor stub
 		Dijkstra.hayFin = false;
 		this.parent = parent;
@@ -73,7 +74,7 @@ public class Dijkstra {
 	}
 
 
-	public void setNodos(ArrayList<Nodo> nodos) {
+	public void setNodos(ArrayList<Nodo> nodos) throws NodoFinNoConectadoException {
 		this.nodos = nodos;
 		discriminarNodos();
 		
@@ -126,13 +127,16 @@ public class Dijkstra {
 		return aux;
 	}
 
-	private void discriminarNodos() {
+	private void discriminarNodos() throws NodoFinNoConectadoException {
 		for (Nodo nodo : nodos) {
 			if(nodo.isInicio()) {
 				inicio = nodo;
 			}
-			if(nodo.isFin()) {
+			if(nodo.isFin() && nodo.getArraylistIndiceP().size()>0) {
 				hayFin = true;
+			}
+			else if(nodo.getArraylistIndiceP().isEmpty()){
+				throw new NodoFinNoConectadoException("Nodo final no conectado, intentelo de nuevo");
 			}
 		}
 	}

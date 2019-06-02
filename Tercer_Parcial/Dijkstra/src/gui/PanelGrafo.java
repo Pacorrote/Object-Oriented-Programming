@@ -135,6 +135,7 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 		addMouseMotionListener(this);
 		addMouseListener(this);
 		addKeyListener(this);
+		setFocusable(true);
 	}
 	
 	public PanelGrafo getThis() {
@@ -445,23 +446,28 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	@Override
 	public void keyTyped(KeyEvent teclado) {
 		// TODO Auto-generated method stub
-		
+		//System.out.println(teclado.getKeyCode());
 	}
 
 	@Override
-	public void keyPressed(KeyEvent teclado) {
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e.getKeyCode());
+	}
+
+	@Override
+	public void keyReleased(KeyEvent teclado) {
 		// TODO Auto-generated method stub
 		System.out.println(teclado.getKeyCode());
+		System.out.println(KeyEvent.VK_ESCAPE);
 		if(teclado.getKeyCode()==KeyEvent.VK_ESCAPE) {
 			System.out.println("Que onda");
-			borrarArista();
+			if(auxNodo!=null && auxArista!=null) {
+				status = AristaStatus.NO_PINTAR;
+				borrarArista();
+				auxNodo = null;
+			}
 		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public JLabel getEtiqueta() {

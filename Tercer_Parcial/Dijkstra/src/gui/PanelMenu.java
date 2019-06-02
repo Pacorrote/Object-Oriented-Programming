@@ -8,10 +8,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
 
+import excepciones.NodoFinNoConectadoException;
 import objetos.AristaStatus;
 import objetos.Dijkstra;
 import objetos.PanelMenuListener;
@@ -41,6 +43,7 @@ public class PanelMenu extends JPanel{
 				pnlMenuListener.pintarNodo();
 			}
 		});
+		nodo.setFocusable(false);
 		arista = new JButton("Arista");
 		arista.setFont(fuente);
 		arista.addActionListener(new ActionListener() {
@@ -51,6 +54,7 @@ public class PanelMenu extends JPanel{
 				pnlMenuListener.pintarArista(AristaStatus.Pintar);
 			}
 		});
+		arista.setFocusable(false);
 		resolver = new JButton("Resolver");
 		resolver.setFont(fuente);
 		resolver.addActionListener(new ActionListener() {
@@ -58,7 +62,15 @@ public class PanelMenu extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				pnlMenuListener.resolverDijkstra(new Dijkstra(parent.getPnlGrafo().getNodos(), parent));
+				try {
+					pnlMenuListener.resolverDijkstra(new Dijkstra(parent.getPnlGrafo().getNodos(), parent));
+				} catch (NodoFinNoConectadoException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(parent, 
+							e1.getMessage(),
+							"ERROR",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		eliminarDibujo = new JToggleButton ("Eliminar objeto");
@@ -77,6 +89,7 @@ public class PanelMenu extends JPanel{
 				
 			}
 		});
+		eliminarDibujo.setFocusable(false);
 		pnlresultado = new JPanel();
 		pnlresultado.setBackground(Color.WHITE);
 		LineBorder borde = new LineBorder(Color.BLACK, 4, false);
