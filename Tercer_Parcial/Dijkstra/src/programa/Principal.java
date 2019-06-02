@@ -11,7 +11,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//Interfaz interfaz = new Interfaz();
+		Interfaz interfaz = new Interfaz();
 		ArrayList<Integer> arrayList1 = new ArrayList<>();
 		arrayList1.add(1);
 		ArrayList<Integer> arrayList2 = new ArrayList<>();

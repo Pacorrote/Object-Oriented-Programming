@@ -1,6 +1,8 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -28,10 +30,12 @@ public class PanelMenu extends JPanel{
 	private JPanel pnlresultado;
 	private JLabel resultado;
 	private Font fuente;
+	private JPanel botones;
+	private JButton abrirArch;
 
 	public PanelMenu(Interfaz parent) {
 		// TODO Auto-generated constructor stub
-		super.setLayout(new GridLayout(5, 1, 20, 15));
+		super.setLayout(new BorderLayout(10, 10));
 		fuente = new Font("Aqua", Font.PLAIN, 20);
 		nodo = new JButton("Nodo");
 		nodo.setFont(fuente);
@@ -91,18 +95,35 @@ public class PanelMenu extends JPanel{
 			}
 		});
 		eliminarDibujo.setFocusable(false);
+		abrirArch = new JButton("Abrir archivo");
+		abrirArch.setFont(fuente);
+		abrirArch.setFocusable(false);
+		abrirArch.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				pnlMenuListener.abrirArchivo();
+			}
+		});
+		botones = new JPanel(new GridLayout(6, 1, 20, 15));
+		botones.setPreferredSize(new Dimension(200,500));
+		botones.add(nodo);
+		botones.add(arista);
+		botones.add(eliminarDibujo);
+		botones.add(resolver);
+		botones.add(abrirArch);
+		botones.add(new JPanel());
 		pnlresultado = new JPanel();
 		pnlresultado.setBackground(Color.WHITE);
 		LineBorder borde = new LineBorder(Color.BLACK, 4, false);
 		pnlresultado.setBorder(borde);
+		pnlresultado.setPreferredSize(new Dimension(200, 200));
 		resultado = new JLabel();
 		resultado.setFont(new Font("Gothica", 0, 18));
 		pnlresultado.add(resultado);
-		super.add(nodo);
-		super.add(arista);
-		super.add(eliminarDibujo);
-		super.add(resolver);
-		super.add(pnlresultado);
+		super.add(botones, BorderLayout.NORTH);
+		super.add(pnlresultado, BorderLayout.SOUTH);
 	}
 
 	public JPanel getPnlresultado() {

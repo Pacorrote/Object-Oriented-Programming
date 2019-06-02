@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Dimension;
 
 
@@ -23,6 +24,8 @@ public class Interfaz extends JFrame{
 	
 	private Dijkstra solución;
 	
+	private VentanaArchivos vA;
+	
 	public Interfaz() {
 		// TODO Auto-generated constructor stub
         super.setSize(1000, 700);
@@ -32,6 +35,7 @@ public class Interfaz extends JFrame{
         pnlGrafo.setPreferredSize(new Dimension(800, 700));
         pnlGrafo.setBackground(Color.WHITE);
         pnlMenu = new PanelMenu(this);
+        vA = new VentanaArchivos(this);
         pnlMenu.setPnlMenuListener(new PanelMenuListener() {
 			
 			@Override
@@ -71,12 +75,19 @@ public class Interfaz extends JFrame{
 							JOptionPane.ERROR_MESSAGE);
 				} 
 			}
+
+			@Override
+			public void abrirArchivo() {
+				// TODO Auto-generated method stub
+				vA.setVisible(true);
+			}
 		});
         pnlMenu.setPreferredSize(new Dimension(200, 700));
         pnlGrafo.setEtiqueta(pnlMenu.getResultado());
         super.add(pnlGrafo, BorderLayout.CENTER);
         super.add(pnlMenu, BorderLayout.EAST);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        System.setProperty("apple.awt.fileDialogForDirectories", "true");
         super.setVisible(true);
 	}
 
