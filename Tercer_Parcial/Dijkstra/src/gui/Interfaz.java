@@ -4,11 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Dimension;
-
+import java.awt.FileDialog;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 
 import excepciones.NoFinException;
 import excepciones.NoInicioException;
@@ -80,9 +89,81 @@ public class Interfaz extends JFrame{
 			}
 
 			@Override
-			public void abrirArchivo() {
+			public void abrirArchivo() throws ClassNotFoundException {
 				// TODO Auto-generated method stub
+				vA.setMode(FileDialog.LOAD);
 				vA.setVisible(true);
+				Vector<Object> vector = new Vector<>();
+				boolean exito = false;
+				do {
+					vA.setVisible(true);
+					try {
+						
+						
+
+						ObjectInputStream abrir = new ObjectInputStream(new FileInputStream(vA.getDirectory()+vA.getFile()));
+
+						vector = (Vector) abrir.readObject();
+						
+						
+
+						JOptionPane.showMessageDialog(getContentPane(), 
+								"Error al guardar el archivo, intentelo de nuevo",
+								"Exito",
+								JOptionPane.INFORMATION_MESSAGE);
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						exito=true;
+						JOptionPane.showMessageDialog(getContentPane(), 
+								"Error al guardar el archivo, intentelo de nuevo",
+								"ERROR",
+								JOptionPane.ERROR_MESSAGE);
+						e.printStackTrace();
+					}
+
+				} while (exito);
+			}
+
+			@Override
+			public void guardarArchivo() {
+				// TODO Auto-generated method stub
+				vA.setMode(FileDialog.SAVE);
+				Vector<Object> vector = new Vector<>();
+				boolean exito = false;
+				do {
+					vA.setVisible(true);
+					try {
+						
+						pnlGrafo.colorearAristas(Color.BLACK);
+
+						vector.add(pnlGrafo.getAristaAuxiliares());
+
+						vector.add(pnlGrafo.getNodos());
+
+						ObjectOutputStream guardar = new ObjectOutputStream(new FileOutputStream(vA.getDirectory()+vA.getFile()));
+
+						guardar.writeObject(vector);
+
+						guardar.close();
+
+						JOptionPane.showMessageDialog(getContentPane(), 
+								"Archivo guardado",
+								"Exito",
+								JOptionPane.INFORMATION_MESSAGE);
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						exito=true;
+						JOptionPane.showMessageDialog(getContentPane(), 
+								"Error al guardar el archivo, intentelo de nuevo",
+								"ERROR",
+								JOptionPane.ERROR_MESSAGE);
+						e.printStackTrace();
+					}
+				}while(exito);
+				
+				pnlGrafo.colorearRutas();
 			}
 		});
         pnlMenu.setPreferredSize(new Dimension(200, 700));
@@ -110,6 +191,11 @@ public class Interfaz extends JFrame{
 		this.pnlGrafo = pnlGrafo;
 	}
 	
+	public void cargarDatos(Vector<Object> vector) {
+		for (Object object : vector) {
+			
+		}
+	}
 	
 	
 

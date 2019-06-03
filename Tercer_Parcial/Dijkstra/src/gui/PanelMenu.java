@@ -104,7 +104,15 @@ public class PanelMenu extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				pnlMenuListener.abrirArchivo();
+				try {
+					pnlMenuListener.abrirArchivo();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(parent, 
+							"Error al guardar el archivo, intentelo de nuevo",
+							"ERROR",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		guardarDibujo = new JButton("Guardar dibujo");
@@ -115,7 +123,7 @@ public class PanelMenu extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				pnlMenuListener.guardarArchivo();
 			}
 		});
 		botones = new JPanel(new GridLayout(6, 1, 20, 15));
@@ -134,6 +142,7 @@ public class PanelMenu extends JPanel{
 		resultado = new JLabel();
 		resultado.setFont(new Font("Gothica", 0, 18));
 		resultado.setPreferredSize(new Dimension(200, 195));
+		resultado.setHorizontalAlignment(JLabel.CENTER);
 		pnlresultado.add(resultado);
 		super.add(botones, BorderLayout.NORTH);
 		super.add(pnlresultado, BorderLayout.SOUTH);

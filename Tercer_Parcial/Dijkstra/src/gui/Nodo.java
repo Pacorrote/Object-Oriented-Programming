@@ -5,9 +5,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Nodo {
+public class Nodo implements Serializable{
 
 	private Character nombre;
 	private ArrayList<Arista> aristas;

@@ -5,8 +5,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class Arista {
+public class Arista implements Serializable{
 	
 	private Integer numero;
 	private Nodo p;

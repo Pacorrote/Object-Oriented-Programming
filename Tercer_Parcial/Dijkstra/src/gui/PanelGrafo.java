@@ -642,5 +642,21 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 		
 	}
 	
+	public void colorearAristas(Color color) {
+		for (Arista arista : aristaAuxiliares) {
+			arista.setColor(color);
+		}
+	}
+
+	public ArrayList<Arista> getAristaAuxiliares() {
+		return aristaAuxiliares;
+	}
+
+	public void setAristaAuxiliares(ArrayList<Arista> aristaAuxiliares) {
+		this.aristaAuxiliares = aristaAuxiliares;
+	}
+	
+	
+	
 	
 }
