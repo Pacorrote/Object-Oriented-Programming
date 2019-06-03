@@ -32,6 +32,7 @@ public class PanelMenu extends JPanel{
 	private Font fuente;
 	private JPanel botones;
 	private JButton abrirArch;
+	private JButton guardarDibujo;
 
 	public PanelMenu(Interfaz parent) {
 		// TODO Auto-generated constructor stub
@@ -106,21 +107,33 @@ public class PanelMenu extends JPanel{
 				pnlMenuListener.abrirArchivo();
 			}
 		});
+		guardarDibujo = new JButton("Guardar dibujo");
+		guardarDibujo.setFont(fuente);
+		guardarDibujo.setFocusable(false);
+		guardarDibujo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		botones = new JPanel(new GridLayout(6, 1, 20, 15));
-		botones.setPreferredSize(new Dimension(200,500));
+		botones.setPreferredSize(new Dimension(200,495));
 		botones.add(nodo);
 		botones.add(arista);
 		botones.add(eliminarDibujo);
 		botones.add(resolver);
 		botones.add(abrirArch);
-		botones.add(new JPanel());
+		botones.add(guardarDibujo);
 		pnlresultado = new JPanel();
 		pnlresultado.setBackground(Color.WHITE);
 		LineBorder borde = new LineBorder(Color.BLACK, 4, false);
 		pnlresultado.setBorder(borde);
-		pnlresultado.setPreferredSize(new Dimension(200, 200));
+		pnlresultado.setPreferredSize(new Dimension(200, 195));
 		resultado = new JLabel();
 		resultado.setFont(new Font("Gothica", 0, 18));
+		resultado.setPreferredSize(new Dimension(200, 195));
 		pnlresultado.add(resultado);
 		super.add(botones, BorderLayout.NORTH);
 		super.add(pnlresultado, BorderLayout.SOUTH);

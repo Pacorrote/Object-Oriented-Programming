@@ -67,6 +67,9 @@ public class Interfaz extends JFrame{
 				 setSolucion(solucion);
 				 try {
 					 pnlMenu.getResultado().setText(String.valueOf(Dijkstra.dijkstraCosto(getSolución().getInicio(), suma)));
+					 pnlGrafo.setRutaEconomica(Dijkstra.dijkstraRutas(getSolución().getInicio(), suma));
+					 pnlGrafo.colorearRutas();
+					 repaint();
 				} catch (NoFinException e) {
 					// TODO: handle exception
 					JOptionPane.showMessageDialog(getContentPane(), 

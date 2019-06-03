@@ -26,6 +26,7 @@ import hilos.HiloPopMenu;
 import hilos.HiloSelArista;
 import hilos.HiloSelNodo;
 import objetos.AristaStatus;
+import objetos.Ruta;
 
 public class PanelGrafo extends JPanel implements MouseMotionListener, MouseListener, KeyListener{
 	
@@ -49,6 +50,7 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	private JLabel etiqueta;
 	private ArrayList<Arista> aristaAuxiliares;
 	private HiloPopMenu hiloPopMenu;
+	private Ruta rutaEconomica;
 
 	
 	public PanelGrafo() {
@@ -119,6 +121,9 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 				int r = random.nextInt(254)+1, g = random.nextInt(254)+1, b = random.nextInt(254)+1;
 				auxNodo.setColor(new Color(r, g, b));
 				auxNodo.setFin(true);
+				for (int numeros : auxNodo.getArraylistIndiceP()) {
+					System.out.println(numeros);
+				}
 				opcionesNodo[2].setEnabled(false);
 				menuClickDer.removeAll();
 				updateUI();
@@ -301,21 +306,24 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 							&& e.getY()>=nodos.get(a1).getY()-50)) {
 						
 						if(nodos.get(a1).getArraylistIndiceP().size()>0) {
+							a2=0;
 							while(a2<nodos.get(a1).getArraylistIndiceP().size()) {
 								Nodo auxN1 = nodos.get(a1);
 								int indice = auxN1.getArraylistIndiceP().get(a2);
-								Nodo auxN2 = nodos.get(indice);
-								boolean cerrarCiclo = false;
-								a=0;
-								while(a<auxN2.getAristas().size() && !cerrarCiclo) {
-									Arista auxA1 = auxN2.getAristas().get(a);
-									System.out.println("voy a borrar arista");
-									if(auxA1.getT()==auxN1) {
-										System.out.println("Borrar arista");
-										auxN2.getAristas().remove(auxA1);
-										cerrarCiclo=true;
+								if(indice<nodos.size()) {
+									Nodo auxN2 = nodos.get(indice);
+									boolean cerrarCiclo = false;
+									a=0;
+									while(a<auxN2.getAristas().size() && !cerrarCiclo) {
+										Arista auxA1 = auxN2.getAristas().get(a);
+										System.out.println("voy a borrar arista");
+										if(auxA1.getT()==auxN1) {
+											System.out.println("Borrar arista");
+											auxN2.getAristas().remove(auxA1);
+											cerrarCiclo=true;
+										}
+										a++;
 									}
-									a++;
 								}
 								a2++;
 							}
@@ -597,7 +605,42 @@ public class PanelGrafo extends JPanel implements MouseMotionListener, MouseList
 	public void setEtiqueta(JLabel etiqueta) {
 		this.etiqueta = etiqueta;
 	}
+
+	public Ruta getRutaEconomica() {
+		return rutaEconomica;
+	}
+
+	public void setRutaEconomica(Ruta rutaEconomica) {
+		this.rutaEconomica = rutaEconomica;
+	}
 	
+	public void colorearRutas() {
+		int r, g , b ;
+		Color color;
+		Boolean noRojo = false;
+		do {
+			r = random.nextInt(254)+1;
+			g = random.nextInt(254)+1;
+			b = random.nextInt(254)+1;
+			color = new Color(r, g, b);
+			if(color == Color.RED) {
+				noRojo = true;
+			}
+		} while (noRojo);
+		
+		System.out.println("\n");
+		
+		for (Arista arista : aristaAuxiliares) {
+			for (Arista arista1 : rutaEconomica.getAristas()) {
+				if(arista==arista1) {
+					System.out.println("igual");
+					arista.setColor(color);
+					repaint();
+				}
+			}
+		}
+		
+	}
 	
 	
 }

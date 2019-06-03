@@ -14,6 +14,7 @@ public class Arista {
 	private Integer x2;
 	private Integer y2;
 	private Integer indiceP;
+	private Color color = Color.RED;
 
 	
 	public static final Float DEFAULTGROSOR = (float) 4;
@@ -92,7 +93,7 @@ public class Arista {
 	public void pintarArista(Graphics g) {
 		Graphics2D g1 = (Graphics2D) g;
 		g1.setStroke(new BasicStroke(DEFAULTGROSOR));
-		g1.setColor(Color.RED);
+		g1.setColor(color);
 		if(t==null) {
 			g1.drawLine(p.getX(), p.getY(), x2, y2);
 		}
@@ -139,6 +140,14 @@ public class Arista {
 			ypm = ypm/2;
 			return ypm;
 		}
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 	
 	

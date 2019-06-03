@@ -86,7 +86,7 @@ public class Dijkstra {
 	public Nodo getInicio() {
 		return inicio;
 	}
-
+	
 
 	public void setInicio(Nodo inicio) {
 		this.inicio = inicio;
@@ -135,18 +135,27 @@ public class Dijkstra {
 		}
 	}
 	
-	public static void dijkstraRutas(Nodo inicio, int suma) throws NoFinException {
+	public static Ruta dijkstraRutas(Nodo inicio, int suma) throws NoFinException {
 		if(hayFin) {
 			rutas = new ArrayList<>();
 			suma = 0;
-			recorrer(inicio, new ArrayList<Arista>(), suma);
+			ArrayList<Arista> aristas = new ArrayList<>();
+			recorrer(inicio, aristas, suma);
+			return rutaEconomica();
 		}
 		else {
 			throw new NoFinException("Nodo fin no indicado");
 		}
 	}
 	
-	
+	private static Ruta rutaEconomica() {
+		for (Ruta ruta : rutas) {
+			if(ruta.getSumaTotal()==menorCosto()) {
+				return ruta;
+			}
+		}
+		return null;
+	}
 	
 	private static Integer menorCosto() {
 		int aux = costos.get(0);
@@ -163,11 +172,13 @@ public class Dijkstra {
 			if(nodo.isInicio()) {
 				inicio = nodo;
 			}
-			if(nodo.isFin() && nodo.getArraylistIndiceP().size()>0) {
-				hayFin = true;
-			}
-			else if(nodo.getArraylistIndiceP().isEmpty()){
-				throw new NodoFinNoConectadoException("Nodo final no conectado, intentelo de nuevo");
+			if(nodo.isFin()) {
+				if (nodo.getArraylistIndiceP().size()>0) {
+					hayFin = true;
+				}
+				else if(nodo.getArraylistIndiceP().isEmpty()){
+					throw new NodoFinNoConectadoException("Nodo final no conectado, intentelo de nuevo");
+				}
 			}
 		}
 	}
